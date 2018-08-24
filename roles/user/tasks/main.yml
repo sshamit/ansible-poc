@@ -1,0 +1,9 @@
+---
+ - name: Create a login user
+   user:
+      name: jenkins
+      groups: # Empty by default, here we give it some groups
+       - admin
+       - sudo
+      state: present
+      shell: /bin/bash       # Defaults to /bin/bash
