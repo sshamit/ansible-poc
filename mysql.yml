@@ -1,5 +1,5 @@
 ---
-- hosts: webservers
-  sudo: yes
+- hosts: dbservers
+  become: yes
   roles:
     - mysql
