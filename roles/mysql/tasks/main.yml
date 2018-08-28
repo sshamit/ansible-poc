@@ -6,17 +6,6 @@
     update_cache: yes
   with_items: "{{ ubuntu_mysql_pkgs }}"
 
-- name: Update MySQL root password for all root accounts 
-  mysql_user:
-    name: root
-    host: "{{ item }}"
-    password: "{{ mysql_root_pass }}"
-    state: present
-  with_items:
-    - "{{ ansible_hostname }}"
-    - 127.0.0.1
-    - ::1
-    - localhost
 
 - name: Copy the templates to their respestive destination
   template:
