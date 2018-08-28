@@ -15,7 +15,7 @@
     group: root 
     mode: "{{ item.mode | default(644) }}"
   with_items:
-    - { src: 'my.cnf.j2', dest: '/etc/mysql/my.cnf' }
-    - { src: 'root.cnf.j2', dest: '~/.my.cnf', mode: '600' }
+    - { src: '../templates/my.cnf.j2', dest: '/etc/mysql/my.cnf' }
+    - { src: '../templates/root.cnf.j2', dest: '~/.my.cnf', mode: '600' }
   notify:
     - Restart MySQL
