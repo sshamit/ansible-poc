@@ -6,10 +6,10 @@
     update_cache: yes
   with_items: "{{ ubuntu_mysql_pkgs }}"
 
-  - name: Start the MySQL service
-    sudo: yes
-    service: 
-      name: mysql 
-      state: started
-      enabled: true
+- name: "Start the MySQL service"
+  service: 
+    enabled: true
+    name: mysql
+    state: started
+  sudo: true
  
