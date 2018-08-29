@@ -14,7 +14,7 @@
   sudo: true
  
 - name: Copy the root credentials as .my.cnf file
-  template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+  template: src=../templates/root.cnf.j2 dest=~/.my.cnf mode=0600
 
 - name: Ensure Anonymous user(s) are not in the database
   mysql_user: name='' host={{ item }} state=absent
