@@ -6,16 +6,10 @@
     update_cache: yes
   with_items: "{{ ubuntu_mysql_pkgs }}"
 
-
-- name: Copy the templates to their respestive destination
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root 
-    group: root 
-    mode: "{{ item.mode | default(644) }}"
-  with_items:
-    - { src: '../templates/my.cnf.j2', dest: '/etc/mysql/my.cnf' }
-    - { src: '../templates/root.cnf.j2', dest: '~/.my.cnf', mode: '600' }
-  notify:
-    - Restart MySQL
+  - name: Start the MySQL service
+    sudo: yes
+    service: 
+      name: mysql 
+      state: started
+      enabled: true
+ 
