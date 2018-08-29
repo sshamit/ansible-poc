@@ -13,3 +13,16 @@
     state: started
   sudo: true
  
+- name: Copy the root credentials as .my.cnf file
+  template: src=root.cnf.j2 dest=~/.my.cnf mode=0600
+
+- name: Ensure Anonymous user(s) are not in the database
+  mysql_user: name='' host={{ item }} state=absent
+  with_items:
+    - localhost
+    - "{{ ansible_hostname }}"
+
+- name: Remove the test database
+  mysql_db: name=test state=absent
+  notify:
+    - Restart MySQL
