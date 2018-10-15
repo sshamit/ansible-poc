@@ -107,11 +107,9 @@
                 </drivers>
             </datasources>
         </subsystem>
-        {% if jbossApplicationScanPath %}
         <subsystem xmlns="urn:jboss:domain:deployment-scanner:1.1">
-            <deployment-scanner path="{{ jbossApplicationScanPath }}" scan-interval="0" auto-deploy-zipped="false" auto-deploy-exploded="false"/>
+            <deployment-scanner path="deployments" relative-to="jboss.server.base.dir" scan-interval="5000"/>
         </subsystem>
-        {% endif %}
         <subsystem xmlns="urn:jboss:domain:ee:1.0"/>
         <subsystem xmlns="urn:jboss:domain:ejb3:1.2">
             <session-bean>
@@ -259,7 +257,7 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
             <connector name="http" protocol="HTTP/1.1" scheme="http" socket-binding="http"/>
-            <virtual-server name="default-host" enable-welcome-root="false">
+            <virtual-server name="default-host" enable-welcome-root="true">
                 <alias name="localhost"/>
                 <alias name="example.com"/>
             </virtual-server>
@@ -293,18 +291,18 @@
         </interface>
     </interfaces>
     <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
-        <socket-binding name="management-native" interface="management" port="{{ jbossManNativePort }}"/>
-        <socket-binding name="management-http" interface="management" port="{{ jbossManHttpPort }}"/>
-        <socket-binding name="management-https" interface="management" port="{{ jbossManHttpsPort }}"/>
-        <socket-binding name="ajp" port="{{ jbossAjpPort }}"/>
-        <socket-binding name="http" port="{{ jbossHttpPort }}"/>
-        <socket-binding name="https" port="{{ jbossHttpsPort }}"/>
-        <socket-binding name="osgi-http" interface="management" port="{{ jbossOsgiHttpPort }}"/>
-        <socket-binding name="remoting" port="{{ jbossRemotingPort }}"/>
-        <socket-binding name="txn-recovery-environment" port="{{ jbossTxnRecoveryPort }}"/>
-        <socket-binding name="txn-status-manager" port="{{ jbossTxnStatusPort }}"/>
+        <socket-binding name="management-native" interface="management" port="${jboss.management.native.port:9999}"/>
+        <socket-binding name="management-http" interface="management" port="${jboss.management.http.port:9990}"/>
+        <socket-binding name="management-https" interface="management" port="${jboss.management.https.port:9443}"/>
+        <socket-binding name="ajp" port="8009"/>
+        <socket-binding name="http" port="{{ http_port }}"/>
+        <socket-binding name="https" port="{{ https_port }}"/>
+        <socket-binding name="osgi-http" interface="management" port="8090"/>
+        <socket-binding name="remoting" port="4447"/>
+        <socket-binding name="txn-recovery-environment" port="4712"/>
+        <socket-binding name="txn-status-manager" port="4713"/>
         <outbound-socket-binding name="mail-smtp">
-            <remote-destination host="{{ jbossSMTPRemoteHost }}" port="{{ jbossSMTPRemotePort }}"/>
+            <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
 </server>
